@@ -24,3 +24,25 @@ fn swap_if_needed(x: &mut[u32], up: bool) {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use std::vec;
+    use super::sort;
+
+    #[test]
+    fn sort_u32_ascending() {
+        let mut array = vec![1, 3, 65, 21, 2, 9, 7, 0];
+        sort(&mut array, true);
+
+        assert_eq!(array, vec![0, 1, 2, 3, 7, 9, 21, 65]);
+    }
+
+    #[test]
+    fn test_u32_descending() {
+        let mut array = vec![1, 3, 65, 21, 2, 9, 7, 0];
+        sort(&mut array, false);
+
+        assert_eq!(array, vec![65, 21, 9, 7, 3, 2, 1, 0]);
+    }
+}
