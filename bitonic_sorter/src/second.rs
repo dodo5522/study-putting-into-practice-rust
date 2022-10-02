@@ -1,4 +1,4 @@
-pub fn sort(x: &mut[u32], up: bool) {
+pub fn sort<T: Ord>(x: &mut[T], up: bool) {
     if x.len() > 1 {
         let middle_index = x.len() / 2;
         sort(&mut x[..middle_index], true);
@@ -7,7 +7,7 @@ pub fn sort(x: &mut[u32], up: bool) {
     }
 }
 
-fn sort_sub(x: &mut[u32], up: bool) {
+fn sort_sub<T: Ord>(x: &mut[T], up: bool) {
     if x.len() > 1 {
         let middle_index = x.len() / 2;
         swap_if_needed(x, up);
@@ -16,7 +16,7 @@ fn sort_sub(x: &mut[u32], up: bool) {
     }
 }
 
-fn swap_if_needed(x: &mut[u32], up: bool) {
+fn swap_if_needed<T: Ord>(x: &mut[T], up: bool) {
     let middle_index = x.len() / 2;
     for i in 0..middle_index {
         if (x[i] > x[i + middle_index]) == up {
@@ -44,5 +44,21 @@ mod tests {
         sort(&mut array, false);
 
         assert_eq!(array, vec![65, 21, 9, 7, 3, 2, 1, 0]);
+    }
+
+    #[test]
+    fn sort_str_ascending() {
+        let mut array: Vec<&str> = vec!["hoge", "fuga", "fugo", "hage"];
+        sort(&mut array, true);
+
+        assert_eq!(array, vec!["fuga", "fugo", "hage", "hoge"]);
+    }
+
+    #[test]
+    fn test_str_descending() {
+        let mut array: Vec<&str> = vec!["hoge", "fuga", "fugo", "hage"];
+        sort(&mut array, false);
+
+        assert_eq!(array, vec!["hoge", "hage", "fugo", "fuga"]);
     }
 }
